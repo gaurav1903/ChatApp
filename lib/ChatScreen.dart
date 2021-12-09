@@ -17,26 +17,32 @@ class _ChatScreenState extends State<ChatScreen> {
       appBar: AppBar(title: const Text('BEGIN')),
       body: FutureBuilder(
           future: Firebase.initializeApp(),
-          builder: (ctx, snap) {
-            if (snap.connectionState == ConnectionState.done)
-              return ListView.builder(
-                itemBuilder: (ctx, index) {
-                  return Container(child: const Text('it works'));
-                },
-                itemCount: 5,
-              );
+          builder: (ctx, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting)
+              return CircularProgressIndicator();
             else
-              return Text("Fucked");
+              return StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection('/chats/dJ2fGitAdiSSzupLpoRG/messages')
+                      .snapshots(),
+                  builder: (ctx, snap) {
+                    if (snap.connectionState == ConnectionState.waiting)
+                      return Center(child: CircularProgressIndicator());
+                    var x = snap.data as QuerySnapshot<Map<String, dynamic>>;
+                    var y = x.docs;
+                    return ListView.builder(
+                      itemBuilder: (ctx, index) {
+                        return Text(y[index]['text']);
+                      },
+                      itemCount: y.length,
+                    );
+                    return Text("cool");
+                  }
+                  // log(snap.data.toString());
+                  );
           }),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => FirebaseFirestore.instance
-            .collection('/chats/dJ2fGitAdiSSzupLpoRG/messages')
-            .snapshots()
-            .listen((data) {
-          data.docs.forEach((element) {
-            log(element.get('text'));
-          });
-        }),
+        onPressed: null,
         child: const Icon(Icons.add),
       ),
     );
