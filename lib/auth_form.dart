@@ -32,8 +32,22 @@ class _AuthFormState extends State<AuthForm> {
                   decoration: InputDecoration(labelText: 'Password'),
                 ),
                 SizedBox(height: 10),
-                ElevatedButton(onPressed: null, child: Text('Login')),
-                TextButton(onPressed: null, child: Text('Create New Account')),
+                ElevatedButton(
+                    onPressed: null,
+                    child: Text(
+                      'Login',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.pink))),
+                TextButton(
+                  onPressed: null,
+                  child: Text(
+                    'Create New Account',
+                    style: TextStyle(color: Theme.of(context).primaryColor),
+                  ),
+                )
               ],
             )),
           ),
