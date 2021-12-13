@@ -88,7 +88,7 @@ class _AuthFormState extends State<AuthForm> {
                     ),
                     SizedBox(height: 10),
                     if (widget.isloading == true)
-                      CircularProgressIndicator()
+                      Center(child: CircularProgressIndicator())
                     else
                       ElevatedButton(
                           onPressed: _submit,
