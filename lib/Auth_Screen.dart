@@ -42,6 +42,7 @@ class _AuthScreenState extends State<AuthScreen> {
             .collection('users')
             .doc(auth.currentUser?.uid)
             .set({'username': username, 'email': email});
+        log("request successful");
       }
     } on PlatformException catch (err) {
       var mess = "Please check credentials";
