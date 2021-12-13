@@ -24,7 +24,8 @@ class Messages extends StatelessWidget {
                 return MessageBubble(
                     z.docs[index]['text'].toString(),
                     z.docs[index]['userid'] ==
-                        FirebaseAuth.instance.currentUser?.uid);
+                        FirebaseAuth.instance.currentUser?.uid,
+                    ValueKey(z.docs[index].id));
               });
         });
   }

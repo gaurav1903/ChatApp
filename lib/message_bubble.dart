@@ -1,17 +1,26 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MessageBubble extends StatelessWidget {
   String msg;
   bool isMe;
-  MessageBubble(this.msg, this.isMe);
+  Key k;
+  MessageBubble(this.msg, this.isMe, this.k);
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment:
+          !isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
         Container(
             decoration: BoxDecoration(
-              color: Theme.of(context).accentColor,
-              borderRadius: BorderRadius.circular(12),
+              color: isMe ? Colors.grey.shade300 : Colors.purple,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(12),
+                  topRight: Radius.circular(12),
+                  bottomLeft: isMe ? Radius.circular(12) : Radius.circular(0),
+                  bottomRight:
+                      isMe == false ? Radius.circular(12) : Radius.circular(0)),
             ),
             width: 140,
             padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
@@ -19,7 +28,9 @@ class MessageBubble extends StatelessWidget {
             child: Text(
               msg,
               style: TextStyle(
-                  color: Theme.of(context).accentTextTheme.headline1?.color),
+                  color: isMe == true
+                      ? Colors.black
+                      : Theme.of(context).accentTextTheme.headline1?.color),
             ))
       ],
     );
